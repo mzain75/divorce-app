@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npm run:*)",
+      "Bash(tasklist)",
+      "Bash(findstr:*)",
+      "Bash(rm:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(cmd /c:*)",
+      "Bash(move:*)",
+      "Bash(npm install)"
+    ],
+    "deny": []
+  }
+}
