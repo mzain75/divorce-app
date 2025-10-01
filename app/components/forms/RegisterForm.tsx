@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { validateEmail, validatePassword } from '@/lib/utils';
-import { RegisterFormData, RegisterFormState, RegisterFormErrors, GenderFormValue } from '@/types';
+import { RegisterFormData, RegisterFormState, RegisterFormErrors } from '@/types';
 
 const genderOptions = [
   { value: '', label: 'Select Gender' },
@@ -105,14 +105,14 @@ export function RegisterForm() {
       } else {
         setErrors({ email: 'Registration failed. Email may already be in use.' });
       }
-    } catch (error) {
+    } catch {
       setErrors({ email: 'Registration failed. Please try again.' });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleChange = (field: keyof RegisterFormState, value: any) => {
+  const handleChange = (field: keyof RegisterFormState, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));

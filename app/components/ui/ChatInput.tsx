@@ -35,7 +35,7 @@ export function ChatInput({ onSendMessage, isLoading, disabled = false }: ChatIn
     
     try {
       await onSendMessage(messageToSend);
-    } catch (error) {
+    } catch {
       // Reset message if sending failed
       setMessage(messageToSend);
     }

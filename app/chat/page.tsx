@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChatMessage, Conversation } from '@/types';
 import { ChatMessage as ChatMessageComponent } from '@/components/ui/ChatMessage';
@@ -36,21 +36,7 @@ export default function ChatPage() {
     scrollToBottom();
   }, [messages, isLoading]);
 
-  // Load conversation on mount
-  useEffect(() => {
-    if (user && !authLoading) {
-      loadConversation();
-    }
-  }, [user, authLoading]); // loadConversation is not included as it's not stable
-
-  // Redirect if not authenticated
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/login');
-    }
-  }, [user, authLoading, router]);
-
-  const loadConversation = async () => {
+  const loadConversation = useCallback(async () => {
     try {
       setIsLoadingConversation(true);
       setError(null);
@@ -75,7 +61,21 @@ export default function ChatPage() {
     } finally {
       setIsLoadingConversation(false);
     }
-  };
+  }, [logout, router]);
+
+  // Load conversation on mount
+  useEffect(() => {
+    if (user && !authLoading) {
+      loadConversation();
+    }
+  }, [user, authLoading, loadConversation]);
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, authLoading, router]);
 
   const sendMessage = async (messageContent: string) => {
     if (!conversation || !messageContent.trim()) return;

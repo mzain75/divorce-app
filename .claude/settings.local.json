@@ -9,7 +9,9 @@
       "Bash(npx prisma generate:*)",
       "Bash(cmd /c:*)",
       "Bash(move:*)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(ping:*)",
+      "Bash(ipconfig /flushdns)"
     ],
     "deny": []
   }

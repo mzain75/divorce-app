@@ -11,7 +11,7 @@ interface ConfirmDialogProps {
   message: string;
   confirmText?: string;
   cancelText?: string;
-  confirmVariant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  confirmVariant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
 }
 
 export function ConfirmDialog({

@@ -7,55 +7,28 @@ import { GeminiRequest, GeminiResponse, GeminiMessage } from '@/types';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-// Legal documents metadata with full URIs and smart selection capabilities
-// const LEGAL_DOCUMENTS = {
-//   "child_support_assessment": {
-//     "title": "Child Support (Assessment) Act 1989 (Cth)",
-//     "uri": "https://generativelanguage.googleapis.com/v1beta/files/xx5w54mirxmd",
-//     "name": "files/xx5w54mirxmd",
-//     "mimeType": "application/pdf",
-//     "keywords": ["child support", "assessment", "calculation", "amount", "formula", "income", "percentage", "payer", "payee"],
-//     "topics": ["child_support", "financial_support", "parental_obligations"]
-//   },
-//   "child_support_collection": {
-//     "title": "Child Support (Registration and Collection) Act 1988 (Cth)",
-//     "uri": "https://generativelanguage.googleapis.com/v1beta/files/g2kv905gfq1d", 
-//     "name": "files/g2kv905gfq1d",
-//     "mimeType": "application/pdf",
-//     "keywords": ["collection", "enforcement", "payment", "default", "garnishment", "employer", "refuse to pay", "non-payment"],
-//     "topics": ["child_support", "enforcement", "debt_recovery"]
-//   },
-//   "family_law_act": {
-//     "title": "Family Law Act 1975 (Cth)",
-//     "uri": "https://generativelanguage.googleapis.com/v1beta/files/ek0yu2fou5jr",
-//     "name": "files/ek0yu2fou5jr", 
-//     "mimeType": "application/pdf",
-//     "keywords": ["divorce", "separation", "property", "assets", "custody", "parenting", "marriage", "family", "spousal maintenance"],
-//     "topics": ["divorce", "property_division", "parenting_arrangements", "spousal_support", "marriage"]
-//   },
-//   "court_rules": {
-//     "title": "Federal Circuit and Family Court of Australia (Family Law) Rules 2021",
-//     "uri": "https://generativelanguage.googleapis.com/v1beta/files/wbghvnbrzg4i",
-//     "name": "files/wbghvnbrzg4i",
-//     "mimeType": "application/pdf", 
-//     "keywords": ["court", "procedure", "filing", "application", "hearing", "orders", "process", "rules", "evidence"],
-//     "topics": ["court_procedures", "legal_process", "applications", "hearings"]
-//   },
-//   "court_act": {
-//     "title": "Federal Circuit and Family Court of Australia Act 2021 (Cth)",
-//     "uri": "https://generativelanguage.googleapis.com/v1beta/files/4gbpbpjw576y",
-//     "name": "files/4gbpbpjw576y",
-//     "mimeType": "application/pdf",
-//     "keywords": ["jurisdiction", "powers", "court structure", "judges", "administration", "appeals"],
-//     "topics": ["court_system", "jurisdiction", "legal_framework"]
-//   }
-// };
+// Document File IDs - Update these when uploading new versions
+const DOC_FILE_IDS = {
+  CHILD_SUPPORT_ASSESSMENT: '5sb2jmenht2s',
+  CHILD_SUPPORT_COLLECTION: '24xc2tdat390',
+  FAMILY_LAW_FEES: 'cj7zi6cnztiu',
+  FAMILY_LAW_ACT_VOL1: 'g9lmelw4au0e',
+  FAMILY_LAW_ACT_VOL2: 'lajs9mq4zjsj',
+  FAMILY_LAW_AMENDMENT_2023: '6rmpj6sre23d',
+  FAMILY_LAW_AMENDMENT_2024: 'fz88irbm0m5u',
+  FAMILY_LAW_REGULATIONS: '4cejms9o5tcd',
+  COURT_TRANSITIONAL_RULES: '9plvrwg6gbrt',
+  COURT_ACT: '0ytqgx3a4huq',
+  MARRIAGE_ACT: 'x97gspgzieao',
+  BIRTHS_DEATHS_MARRIAGES: 'slgngomjfvid',
+  SUPERANNUATION_FAMILY_LAW: 'f1d7ta7j577u',
+};
 
 const LEGAL_DOCUMENTS = {
   "child_support_assessment": {
     "title": "Child Support (Assessment) Act 1989",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/2jkuk1loet62",
-    "name": "files/2jkuk1loet62",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.CHILD_SUPPORT_ASSESSMENT}`,
+    "name": `files/${DOC_FILE_IDS.CHILD_SUPPORT_ASSESSMENT}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Basic terms
@@ -76,8 +49,8 @@ const LEGAL_DOCUMENTS = {
 
   "child_support_collection": {
     "title": "Child Support (Registration and Collection) Act 1988",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/4h6ixg50elg4",
-    "name": "files/4h6ixg50elg4",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.CHILD_SUPPORT_COLLECTION}`,
+    "name": `files/${DOC_FILE_IDS.CHILD_SUPPORT_COLLECTION}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Basic terms
@@ -100,8 +73,8 @@ const LEGAL_DOCUMENTS = {
 
   "family_law_fees": {
     "title": "Family Law (Fees) Regulations 2022",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/8xovvlxbcuth",
-    "name": "files/8xovvlxbcuth",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.FAMILY_LAW_FEES}`,
+    "name": `files/${DOC_FILE_IDS.FAMILY_LAW_FEES}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Basic fee terms
@@ -124,8 +97,8 @@ const LEGAL_DOCUMENTS = {
 
   "family_law_act_vol1": {
     "title": "Family Law Act 1975 Vol 1",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/kyxoj5o4f20e",
-    "name": "files/kyxoj5o4f20e",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.FAMILY_LAW_ACT_VOL1}`,
+    "name": `files/${DOC_FILE_IDS.FAMILY_LAW_ACT_VOL1}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Divorce & separation
@@ -147,8 +120,8 @@ const LEGAL_DOCUMENTS = {
 
   "family_law_act_vol2": {
     "title": "Family Law Act 1975 Vol 2",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/e4zz74e0ekml",
-    "name": "files/e4zz74e0ekml",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.FAMILY_LAW_ACT_VOL2}`,
+    "name": `files/${DOC_FILE_IDS.FAMILY_LAW_ACT_VOL2}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Spousal support
@@ -171,8 +144,8 @@ const LEGAL_DOCUMENTS = {
 
   "family_law_amendment_2023": {
     "title": "Family Law Amendment Act 2023",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/lmmunwio8yhp",
-    "name": "files/lmmunwio8yhp",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.FAMILY_LAW_AMENDMENT_2023}`,
+    "name": `files/${DOC_FILE_IDS.FAMILY_LAW_AMENDMENT_2023}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Recent changes
@@ -193,8 +166,8 @@ const LEGAL_DOCUMENTS = {
 
   "family_law_amendment_2024": {
     "title": "Family Law Amendment Act 2024",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/ynn4igx367py",
-    "name": "files/ynn4igx367py",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.FAMILY_LAW_AMENDMENT_2024}`,
+    "name": `files/${DOC_FILE_IDS.FAMILY_LAW_AMENDMENT_2024}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Latest changes
@@ -214,8 +187,8 @@ const LEGAL_DOCUMENTS = {
 
   "family_law_regulations": {
     "title": "Family Law Regulations 2024",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/eo496np5qsd8",
-    "name": "files/eo496np5qsd8",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.FAMILY_LAW_REGULATIONS}`,
+    "name": `files/${DOC_FILE_IDS.FAMILY_LAW_REGULATIONS}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Regulatory terms
@@ -235,8 +208,8 @@ const LEGAL_DOCUMENTS = {
 
   "court_transitional_rules": {
     "title": "Federal Circuit and Family Court of Australia (Consequential Amendments and Transitional Provisions) Rules 2021",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/96r01bac70fq",
-    "name": "files/96r01bac70fq",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.COURT_TRANSITIONAL_RULES}`,
+    "name": `files/${DOC_FILE_IDS.COURT_TRANSITIONAL_RULES}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Transitional terms
@@ -257,8 +230,8 @@ const LEGAL_DOCUMENTS = {
 
   "court_act": {
     "title": "Federal Circuit and Family Court of Australia Act 2021",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/iq0bp0oe7q90",
-    "name": "files/iq0bp0oe7q90",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.COURT_ACT}`,
+    "name": `files/${DOC_FILE_IDS.COURT_ACT}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Basic terms
@@ -284,8 +257,8 @@ const LEGAL_DOCUMENTS = {
 
   "marriage_act": {
     "title": "Marriage Act 1961",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/ijkf4ofhmwh7",
-    "name": "files/ijkf4ofhmwh7",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.MARRIAGE_ACT}`,
+    "name": `files/${DOC_FILE_IDS.MARRIAGE_ACT}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Basic marriage terms
@@ -316,8 +289,8 @@ const LEGAL_DOCUMENTS = {
 
   "births_deaths_marriages": {
     "title": "Registration of Births, Deaths and Marriages Act 1963",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/mr433qd02v1h",
-    "name": "files/mr433qd02v1h",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.BIRTHS_DEATHS_MARRIAGES}`,
+    "name": `files/${DOC_FILE_IDS.BIRTHS_DEATHS_MARRIAGES}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Basic registration terms
@@ -347,8 +320,8 @@ const LEGAL_DOCUMENTS = {
 
   "superannuation_family_law": {
     "title": "Superannuation (Family Law — Superannuation Act 1976) Orders 2004",
-    "uri": "https://generativelanguage.googleapis.com/v1beta/files/v5e5e1k4x1g2",
-    "name": "files/v5e5e1k4x1g2",
+    "uri": `https://generativelanguage.googleapis.com/v1beta/files/${DOC_FILE_IDS.SUPERANNUATION_FAMILY_LAW}`,
+    "name": `files/${DOC_FILE_IDS.SUPERANNUATION_FAMILY_LAW}`,
     "mimeType": "application/pdf",
     "keywords": [
       // Basic super terms

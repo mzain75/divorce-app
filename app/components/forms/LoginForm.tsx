@@ -54,7 +54,7 @@ export function LoginForm() {
       } else {
         setErrors({ password: 'Invalid email or password' });
       }
-    } catch (error) {
+    } catch {
       setErrors({ password: 'Login failed. Please try again.' });
     } finally {
       setIsLoading(false);
@@ -118,7 +118,7 @@ export function LoginForm() {
 
       <div className="text-center space-y-4">
         <p className="text-sm text-[rgb(var(--muted-foreground))]">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/register" className="text-[rgb(var(--primary))] hover:underline">
             Create one
           </Link>
