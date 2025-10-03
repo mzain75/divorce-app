@@ -7,21 +7,21 @@ import { GeminiRequest, GeminiResponse, GeminiMessage } from '@/types';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-// Document File IDs - Update these when uploading new versions
+// Document File IDs - Update these in .env file
 const DOC_FILE_IDS = {
-  CHILD_SUPPORT_ASSESSMENT: '5sb2jmenht2s',
-  CHILD_SUPPORT_COLLECTION: '24xc2tdat390',
-  FAMILY_LAW_FEES: 'cj7zi6cnztiu',
-  FAMILY_LAW_ACT_VOL1: 'g9lmelw4au0e',
-  FAMILY_LAW_ACT_VOL2: 'lajs9mq4zjsj',
-  FAMILY_LAW_AMENDMENT_2023: '6rmpj6sre23d',
-  FAMILY_LAW_AMENDMENT_2024: 'fz88irbm0m5u',
-  FAMILY_LAW_REGULATIONS: '4cejms9o5tcd',
-  COURT_TRANSITIONAL_RULES: '9plvrwg6gbrt',
-  COURT_ACT: '0ytqgx3a4huq',
-  MARRIAGE_ACT: 'x97gspgzieao',
-  BIRTHS_DEATHS_MARRIAGES: 'slgngomjfvid',
-  SUPERANNUATION_FAMILY_LAW: 'f1d7ta7j577u',
+  CHILD_SUPPORT_ASSESSMENT: process.env.DOC_CHILD_SUPPORT_ASSESSMENT || '',
+  CHILD_SUPPORT_COLLECTION: process.env.DOC_CHILD_SUPPORT_COLLECTION || '',
+  FAMILY_LAW_FEES: process.env.DOC_FAMILY_LAW_FEES || '',
+  FAMILY_LAW_ACT_VOL1: process.env.DOC_FAMILY_LAW_ACT_VOL1 || '',
+  FAMILY_LAW_ACT_VOL2: process.env.DOC_FAMILY_LAW_ACT_VOL2 || '',
+  FAMILY_LAW_AMENDMENT_2023: process.env.DOC_FAMILY_LAW_AMENDMENT_2023 || '',
+  FAMILY_LAW_AMENDMENT_2024: process.env.DOC_FAMILY_LAW_AMENDMENT_2024 || '',
+  FAMILY_LAW_REGULATIONS: process.env.DOC_FAMILY_LAW_REGULATIONS || '',
+  COURT_TRANSITIONAL_RULES: process.env.DOC_COURT_TRANSITIONAL_RULES || '',
+  COURT_ACT: process.env.DOC_COURT_ACT || '',
+  MARRIAGE_ACT: process.env.DOC_MARRIAGE_ACT || '',
+  BIRTHS_DEATHS_MARRIAGES: process.env.DOC_BIRTHS_DEATHS_MARRIAGES || '',
+  SUPERANNUATION_FAMILY_LAW: process.env.DOC_SUPERANNUATION_FAMILY_LAW || '',
 };
 
 const LEGAL_DOCUMENTS = {
